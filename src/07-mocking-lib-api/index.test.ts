@@ -1,5 +1,5 @@
 // Uncomment the code below and write your tests
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
 
 import { throttledGetDataFromApi } from './index';
 
@@ -34,7 +34,7 @@ describe('throttledGetDataFromApi', () => {
     };
     const axiosResultMock = jest
       .spyOn(axios, METHOD)
-      .mockReturnValue(mockReturnObject as any);
+      .mockReturnValue(mockReturnObject as unknown as AxiosInstance);
 
     await throttledGetDataFromApi(BASE_URL);
 
@@ -49,7 +49,9 @@ describe('throttledGetDataFromApi', () => {
       get: getMockAxios,
     };
 
-    jest.spyOn(axios, METHOD).mockReturnValue(mockReturnObject as any);
+    jest
+      .spyOn(axios, METHOD)
+      .mockReturnValue(mockReturnObject as unknown as AxiosInstance);
 
     jest.advanceTimersByTime(TIMEOUT);
     await throttledGetDataFromApi(RELATIVE_PATH);
@@ -62,7 +64,9 @@ describe('throttledGetDataFromApi', () => {
       get: jest.fn().mockReturnValue({ data: DATA_MOCK }),
     };
 
-    jest.spyOn(axios, METHOD).mockReturnValue(mockReturnObject as any);
+    jest
+      .spyOn(axios, METHOD)
+      .mockReturnValue(mockReturnObject as unknown as AxiosInstance);
 
     jest.advanceTimersByTime(TIMEOUT);
 
